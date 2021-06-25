@@ -1,0 +1,132 @@
+*, :after, :before {
+  box-sizing: border-box;
+}
+
+body {
+  opacity: 0;
+  transition: opacity .4s linear;
+}
+
+a, div, h1, h2, h3, h4, h5, h6, img, li, nav, p, span, ul {
+  padding: 0;
+  margin: 0;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  outline: 0;
+}
+
+.App {
+  text-align: center;
+}
+
+.table-container {
+  max-width: 760px;
+  margin: 0 auto; 
+}
+
+.h2-title {
+  margin-bottom: 60px;
+  margin-top: 50px;
+}
+
+.table {
+  width: 100%;
+  max-width: 100%;
+  margin-bottom: 1rem;
+  background-color: transparent;
+  border-collapse: collapse;
+}
+.table .thead-dark th {
+  color: #fff;
+  background-color: #212529;
+  border-color: #32383e;
+  vertical-align: middle;
+}
+.table thead th {
+  vertical-align: bottom;
+  border-bottom: 2px solid #dee2e6;
+}
+
+.table .thead-dark th {
+    color: #fff;
+    background-color: #212529;
+    border-color: #32383e;
+}
+.table thead th {
+    vertical-align: bottom;
+    border-bottom: 2px solid #dee2e6;
+}
+.table td, .table th {
+  padding: .95rem 2rem;
+  vertical-align: middle;
+  border: 1px solid #dee2e6;
+  text-align: left;
+}
+th {
+  text-align: inherit;
+}
+.input-search {
+  padding: .75rem;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #fff;
+  border: none;
+  outline: none;
+  width: 100%;
+  background-color: #212529;
+}
+.input-search::placeholder {
+  color: #fff;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.btn {
+  color: #fff;
+  background-color: #7952b3;
+  display: inline-block;
+  line-height: 1.5;
+  text-align: center;
+  text-decoration: none;
+  vertical-align: middle;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+  border: none;
+  padding: .375rem .75rem;
+  font-size: 1rem;
+  border-radius: .25rem;
+}
+
+.lds-dual-ring {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: inline-block;
+  width: 80px;
+  height: 80px;
+}
+.lds-dual-ring:after {
+  content: " ";
+  display: block;
+  width: 64px;
+  height: 64px;
+  margin: 8px;
+  border-radius: 50%;
+  border: 6px solid #212529;
+  border-color: #212529 transparent #212529 transparent;
+  animation: lds-dual-ring 1.2s linear infinite;
+}
+@keyframes lds-dual-ring {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+

@@ -1,13 +1,29 @@
-*, :after, :before {
+*,
+:after,
+:before {
   box-sizing: border-box;
 }
 
 body {
-  opacity: 0;
-  transition: opacity .4s linear;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
 }
 
-a, div, h1, h2, h3, h4, h5, h6, img, li, nav, p, span, ul {
+a,
+div,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+img,
+li,
+nav,
+p,
+span,
+ul {
   padding: 0;
   margin: 0;
   -webkit-box-sizing: border-box;
@@ -20,8 +36,8 @@ a, div, h1, h2, h3, h4, h5, h6, img, li, nav, p, span, ul {
 }
 
 .table-container {
-  max-width: 760px;
-  margin: 0 auto; 
+  max-width: 960px;
+  margin: 0 auto;
 }
 
 .h2-title {
@@ -29,44 +45,62 @@ a, div, h1, h2, h3, h4, h5, h6, img, li, nav, p, span, ul {
   margin-top: 50px;
 }
 
-.table {
+.form {
   width: 100%;
   max-width: 100%;
   margin-bottom: 1rem;
   background-color: transparent;
   border-collapse: collapse;
 }
-.table .thead-dark th {
+.form .thead-dark th {
   color: #fff;
   background-color: #212529;
   border-color: #32383e;
   vertical-align: middle;
 }
-.table thead th {
+.form thead th {
   vertical-align: bottom;
   border-bottom: 2px solid #dee2e6;
 }
 
-.table .thead-dark th {
-    color: #fff;
-    background-color: #212529;
-    border-color: #32383e;
+.form .thead-dark th {
+  color: #fff;
+  background-color: #212529;
+  border-color: #32383e;
 }
-.table thead th {
-    vertical-align: bottom;
-    border-bottom: 2px solid #dee2e6;
+.form thead th {
+  vertical-align: bottom;
+  border-bottom: 2px solid #dee2e6;
 }
-.table td, .table th {
-  padding: .95rem 2rem;
+.form td,
+.form th {
+  padding: 0.95rem 2rem;
   vertical-align: middle;
   border: 1px solid #dee2e6;
   text-align: left;
 }
-th {
-  text-align: inherit;
+.form-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.form-header__chosen {
+  padding: 0.75rem;
+  background-color: #212529;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #fff;
+  width: 50%;
+}
+.form-header__search {
+  width: 50%;
+}
+.form__drag-line {
+  display: flex;
 }
 .input-search {
-  padding: .75rem;
+  padding: 0.75rem;
   font-size: 1rem;
   font-weight: 400;
   line-height: 1.5;
@@ -95,9 +129,9 @@ th {
   -moz-user-select: none;
   user-select: none;
   border: none;
-  padding: .375rem .75rem;
+  padding: 0.375rem 0.75rem;
   font-size: 1rem;
-  border-radius: .25rem;
+  border-radius: 0.25rem;
 }
 
 .lds-dual-ring {
@@ -110,7 +144,7 @@ th {
   height: 80px;
 }
 .lds-dual-ring:after {
-  content: " ";
+  content: ' ';
   display: block;
   width: 64px;
   height: 64px;
@@ -129,4 +163,189 @@ th {
   }
 }
 
+.select-user {
+  width: 100%;
+  padding: 0.75rem;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #212529;
+  border: 1px solid #212529;
+  outline: none;
+  width: 100%;
+  background-color: #fff;
+}
 
+.faq-item {
+  border-bottom: 1px solid #36383a;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  width: 100%;
+}
+
+.faq-title {
+  display: block;
+  padding: 10px 15px;
+  position: relative;
+  color: #fff;
+  cursor: pointer;
+  transition: background 0.2s ease-out;
+  background-color: #212529;
+  text-align: left;
+}
+
+.faq-title::after {
+  content: '';
+  display: inline-block;
+  border: solid #fff;
+  position: absolute;
+  width: 7px;
+  height: 7px;
+  border-width: 0px 1.5px 1.5px 0;
+  top: 45%;
+  right: 15px;
+  transform: translateY(-50%) rotate(45deg);
+  transition: 0.2s;
+}
+
+.faq-input {
+  width: 0;
+  height: 0;
+  -webkit-appearance: none;
+  appearance: none;
+  position: absolute;
+}
+
+.faq-input:checked ~ .faq-title {
+  background-color: #212529;
+}
+
+.faq-input:checked ~ .faq-title:after {
+  border: solid #fff;
+  border-width: 0px 1.5px 1.5px 0;
+  transform: rotate(-135deg);
+  transition: 0.2s;
+}
+
+.faq-input:checked ~ .faq-text {
+  display: none;
+}
+
+.faq-text {
+  display: block;
+  color: #212529;
+  font-size: 14px;
+  text-align: left;
+}
+p {
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+}
+.faq-item.disable .faq-title {
+  background-color: #7a7d80;
+}
+.faq-item.disable {
+  border-bottom: 1px solid #7a7d80;
+  border-left: 1px solid #7a7d80;
+  border-right: 1px solid #7a7d80;
+}
+
+.form__drag-cell {
+  cursor: grab;
+}
+.form__drag-cart {
+  padding: 15px 15px;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #36383a;
+  border-left: 1px solid #36383a;
+  border-right: 1px solid #36383a;
+  transition: background-color 0.5s;
+}
+.cart__img {
+  width: 48px;
+  margin-right: 12px;
+  height: 48px;
+}
+.chosen-item {
+  display: block;
+}
+.chosen-item .form__drag-cell {
+  border-bottom: 0;
+  border-left: 0;
+  border-right: 0;
+  color: #212529;
+  font-size: 14px;
+  text-align: left;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.chosen-item .form__drag-cart {
+  border-left: 0;
+}
+
+.hovered {
+  opacity: 0.6;
+}
+
+.form__area {
+  display: flex;
+}
+.form__left-bar {
+  width: 50%;
+}
+.form__right-bar {
+  width: 50%;
+  transition: 0.14s;
+}
+.cart__actions-delete {
+  color: #fff;
+  background-color: red;
+  display: inline-block;
+  line-height: 1.5;
+  text-align: center;
+  text-decoration: none;
+  vertical-align: middle;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+  border: none;
+  padding: 0.3rem 0.7rem;
+  height: 32px;
+  width: 35px;
+  display: inline-block;
+}
+.cart__actions-basket {
+  color: #fff;
+  background-color: #0d9bcb;
+  display: inline-block;
+  line-height: 1.5;
+  text-align: center;
+  text-decoration: none;
+  vertical-align: middle;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+  border: none;
+  padding: 0.3rem 0.6rem;
+  height: 32px;
+  width: 35px;
+  display: inline-block;
+}
+.cart__actions {
+  width: 90px;
+}
+.form__drag-choosen-cart {
+  cursor: default;
+}

@@ -1,46 +1,247 @@
 import React, { Component } from 'react';
 
 export default class Table extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      allUsers: props.allUsers,
+      isLoad: props.isLoad,
+      chosenUsers: [],
+      dragItem: {},
+      searchValue: '',
+      dragChooseItem: {},
+    };
+  }
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            allUsers: props.allUsers,
-            isLoad: props.isLoad,
-        }
+  checkUsersAr = (arr) => {
+    if (arr.length !== 0) {
+      return (
+        <div className="faq-item">
+          <input className="faq-input" type="checkbox" id="faq_3" />
+          <label className="faq-title" htmlFor="faq_3">
+            21-30
+          </label>
+          <div className="faq-text">
+            {arr.map((item, i) => {
+              <p key={i}>
+                {item.name.first} {item.name.last}
+              </p>;
+            })}
+          </div>
+        </div>
+      );
+    } else {
+      return (
+        <div className="faq-item disable">
+          <label className="faq-title" htmlFor="faq_3">
+            21-30
+          </label>
+        </div>
+      );
+    }
+  };
+
+  dragStartHandler(e, cart) {
+    if (!e.target.classList.contains('form__drag-choosen-cart')) {
+      this.setState({
+        dragItem: cart,
+      });
     }
 
-    render() {
+    e.target.classList.add('hovered');
+    document.querySelector('.form__right-bar').style.background = 'lightgray';
 
-        const allUsersData = this.state.allUsers;
+    if (e.target.classList.contains('form__drag-choosen-cart')) {
+      this.setState({ dragChooseItem: cart });
+    }
+  }
 
-        return (
-            <div>
+  dragLeaveHandler(e) {}
 
-                <h2 className="h2-title">Данные</h2>
+  dragEndHandler(e) {
+    e.target.classList.remove('hovered');
+    document.querySelector('.form__right-bar').style.background = 'white';
+  }
 
-                <table className="table">
-                
-                <thead className="thead-dark">
-                    <tr>
-                        <th scope="col"> <input type="text" id="search-input" className='input input-search' placeholder='Поиск' /> </th>
-                        <th scope="col">Избранные</th>
-                    </tr>
-                </thead>
+  dragOverHandler(e, cart) {
+    e.preventDefault();
+  }
 
-                <tbody>
-                    {allUsersData.map( (item, i) => {
-                        return (
-                            <tr key={i}>
-                                <td>{item.name.first} {item.name.last}</td>
-                                <td></td>
-                            </tr>
-                        )
-                    } )}
-                </tbody>
-                </table>
+  dropHandler(e, cart) {
+    e.preventDefault();
+
+    this.setState({
+      chosenUsers: [...this.state.chosenUsers, this.state.dragItem],
+    });
+
+    e.target.classList.remove('hovered');
+    document.querySelector('.form__right-bar').style.background = 'white';
+
+    const currentIndex = this.state.chosenUsers.indexOf(this.state.dragChooseItem);
+    //this.setState({ chosenUsers: [this.state.chosenUsers.splice(currentIndex, 1)] });
+    console.log(this.state.chosenUsers.indexOf(e.target));
+  }
+
+  render() {
+    const allUsersData = this.state.allUsers;
+    const allChosenData = this.state.chosenUsers;
+    const usersToTen = [];
+    const userToTwenty = [];
+    const userToThirty = [];
+
+    for (let i = 0; i < allUsersData.length; i++) {
+      if (allUsersData[i].registered.age <= 10) {
+        usersToTen.push(allUsersData[i]);
+      } else if (allUsersData[i].registered.age <= 20 && allUsersData[i].registered.age > 10) {
+        userToTwenty.push(allUsersData[i]);
+      } else if (allUsersData[i].registered.age > 20) {
+        userToThirty.push(allUsersData[i]);
+      }
+    }
+    //console.log(usersToTen);
+    //console.log(userToTwenty);
+    //console.log(userToThirty);
+
+    const searchUsersToTen = usersToTen.filter((user) => {
+      return (
+        user.name.first.toLowerCase().includes(this.state.searchValue.toLowerCase()) ||
+        user.name.last.toLowerCase().includes(this.state.searchValue.toLowerCase())
+      );
+    });
+    const searchUsersToTwenty = userToTwenty.filter((user) => {
+      return (
+        user.name.first.toLowerCase().includes(this.state.searchValue.toLowerCase()) ||
+        user.name.last.toLowerCase().includes(this.state.searchValue.toLowerCase())
+      );
+    });
+
+    return (
+      <div>
+        <h2 className="h2-title">Данные</h2>
+
+        <form className="form">
+          <div className="form-header">
+            <div className="form-header__search">
+              <input
+                type="text"
+                id="search-input"
+                className="input input-search"
+                placeholder="Поиск"
+                onChange={(e) => this.setState({ searchValue: e.target.value })}
+              />
             </div>
-        )
-    }
+            <div className="form-header__chosen">Избранные</div>
+          </div>
 
+          <div className="form__area">
+            <div className="form__left-bar">
+              <div className="form__drag-line">
+                <div className="faq-item">
+                  <input className="faq-input" type="checkbox" id="faq_1" />
+                  <label className="faq-title" htmlFor="faq_1">
+                    1-10
+                  </label>
+                  <div className="faq-text">
+                    {searchUsersToTen.map((item, i) => {
+                      return (
+                        <div key={i} className="form__drag-cell">
+                          <div
+                            onDragStart={(e) => this.dragStartHandler(e, item)}
+                            onDragEnd={(e) => this.dragEndHandler(e)}
+                            draggable="true"
+                            className="form__drag-cart">
+                            <div className="cart__img">
+                              <img src={item.picture.thumbnail} alt="" />
+                            </div>
+                            <div className="cart__info">
+                              <div className="cart__title">
+                                {item.name.first} {item.name.last}, дата регистрации:{' '}
+                                {item.registered.date}
+                              </div>
+                              <div className="cart_body">{item.email}</div>
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              </div>
+
+              <div className="form__drag-line">
+                <div className="faq-item">
+                  <input className="faq-input" type="checkbox" id="faq_2" />
+                  <label className="faq-title" htmlFor="faq_2">
+                    11-20
+                  </label>
+                  <div className="faq-text">
+                    {searchUsersToTwenty.map((item, i) => {
+                      return (
+                        <div key={i} className="form__drag-cell">
+                          <div
+                            onDragStart={(e) => this.dragStartHandler(e, item)}
+                            onDragEnd={(e) => this.dragEndHandler(e)}
+                            draggable="true"
+                            className="form__drag-cart">
+                            <div className="cart__img">
+                              <img src={item.picture.thumbnail} alt="" />
+                            </div>
+                            <div className="cart__info">
+                              <div className="cart__title">
+                                {item.name.first} {item.name.last}, дата регистрации:{' '}
+                                {item.registered.date}
+                              </div>
+                              <div className="cart_body">{item.email}</div>
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              </div>
+
+              {this.checkUsersAr(userToThirty)}
+            </div>
+
+            <div
+              className="form__right-bar"
+              onDragOver={(e) => this.dragOverHandler(e)}
+              onDrop={(e) => this.dropHandler(e)}
+              onDragLeave={(e) => this.dragLeaveHandler(e)}>
+              <div className="chosen-item">
+                {allChosenData.map((item, i) => {
+                  return (
+                    <div key={i} className="form__drag-cell">
+                      <div
+                        className="form__drag-cart form__drag-choosen-cart"
+                        onDragStart={(e) => this.dragStartHandler(e, item)}
+                        onDragEnd={(e) => this.dragEndHandler(e)}
+                        onDragOver={(e) => this.dragOverHandler(e)}
+                        onDragLeave={(e) => this.dragLeaveHandler(e)}>
+                        <div className="cart__img">
+                          <img src={item.picture.thumbnail} alt="" />
+                        </div>
+                        <div className="cart__info">
+                          <div className="cart__title">
+                            {item.name.first} {item.name.last}, дата регистрации:{' '}
+                            {item.registered.date}
+                          </div>
+                          <div className="cart_body">{item.email}</div>
+                        </div>
+                        <div className="cart__actions">
+                          <div className="cart__actions-delete">✖</div>
+                          <div className="cart__actions-basket">🛒</div>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    );
+  }
 }

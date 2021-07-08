@@ -13,7 +13,7 @@ export default class App extends Component {
   }
 
   componentDidMount() {
-    fetch('https://randomuser.me/api/?results=5000&nat=us')
+    fetch('https://randomuser.me/api/?results=500&nat=us')
       .then((result) => result.json())
       .then(
         (result) => {
@@ -31,6 +31,12 @@ export default class App extends Component {
   render() {
     return (
       <div className="App">
+        <div className="description">
+          Данные взяты из https://randomuser.me/api/ <br /> Данные рассортированы по дате
+          регистрации (registered.age) в группы, которые можно свернуть и развернуть.
+          <br /> Есть поиск, который так же показывает вхождение и сортирует по группам <br /> И
+          можно перенести карточку Drag and Drop ом в избранное
+        </div>
         <div className="table-container">
           {this.state.isLoad ? (
             <Loader />

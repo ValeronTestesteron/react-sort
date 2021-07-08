@@ -349,3 +349,10 @@ p {
 .form__drag-choosen-cart {
   cursor: default;
 }
+.description {
+  text-align: left;
+  background-color: #222;
+  padding: 50px;
+  color: #fff;
+  margin-bottom: 70px;
+}

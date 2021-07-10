@@ -7,7 +7,9 @@ export default class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      allUsers: [],
+      usersToTen: [],
+      userToTwenty: [],
+      userToThirty: [],
       isLoad: true,
     };
   }
@@ -17,8 +19,29 @@ export default class App extends Component {
       .then((result) => result.json())
       .then(
         (result) => {
+          const allUsersData = result.results;
+
+          const usersToTen = [];
+          const userToTwenty = [];
+          const userToThirty = [];
+
+          for (let i = 0; i < allUsersData.length; i++) {
+            if (allUsersData[i].registered.age <= 10) {
+              usersToTen.push(allUsersData[i]);
+            } else if (
+              allUsersData[i].registered.age <= 20 &&
+              allUsersData[i].registered.age > 10
+            ) {
+              userToTwenty.push(allUsersData[i]);
+            } else if (allUsersData[i].registered.age > 20) {
+              userToThirty.push(allUsersData[i]);
+            }
+          }
+
           this.setState({
-            allUsers: result.results,
+            usersToTen: usersToTen,
+            userToTwenty: userToTwenty,
+            userToThirty: userToThirty,
             isLoad: !this.state.isLoad,
           });
         },
@@ -41,7 +64,12 @@ export default class App extends Component {
           {this.state.isLoad ? (
             <Loader />
           ) : (
-            <Table isLoad={this.state.isLoad} allUsers={this.state.allUsers} />
+            <Table
+              isLoad={this.state.isLoad}
+              usersToTen={this.state.usersToTen}
+              userToTwenty={this.state.userToTwenty}
+              userToThirty={this.state.userToThirty}
+            />
           )}
         </div>
       </div>

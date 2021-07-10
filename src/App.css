@@ -344,6 +344,7 @@ p {
   display: inline-block;
 }
 .cart__actions {
+  text-align: center;
   width: 90px;
 }
 .form__drag-choosen-cart {

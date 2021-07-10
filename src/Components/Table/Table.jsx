@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
+import Text from '../text';
 
 export default class Table extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      allUsers: props.allUsers,
+      usersToTen: props.usersToTen,
+      userToTwenty: props.userToTwenty,
+      userToThirty: props.userToThirty,
       isLoad: props.isLoad,
       chosenUsers: [],
       dragItem: {},
@@ -56,6 +59,14 @@ export default class Table extends Component {
     }
   }
 
+  deleteChoosenUser(item) {
+    const nweChosenUsers = this.state.chosenUsers.filter((i) => item !== i);
+    console.log('e.target :>> ', item);
+    this.setState({
+      chosenUsers: nweChosenUsers,
+    });
+  }
+
   dragLeaveHandler(e) {}
 
   dragEndHandler(e) {
@@ -79,36 +90,23 @@ export default class Table extends Component {
 
     const currentIndex = this.state.chosenUsers.indexOf(this.state.dragChooseItem);
     //this.setState({ chosenUsers: [this.state.chosenUsers.splice(currentIndex, 1)] });
-    console.log(this.state.chosenUsers.indexOf(e.target));
+    //console.log(this.state.chosenUsers.indexOf(e.target));
   }
 
   render() {
-    const allUsersData = this.state.allUsers;
     const allChosenData = this.state.chosenUsers;
-    const usersToTen = [];
-    const userToTwenty = [];
-    const userToThirty = [];
 
-    for (let i = 0; i < allUsersData.length; i++) {
-      if (allUsersData[i].registered.age <= 10) {
-        usersToTen.push(allUsersData[i]);
-      } else if (allUsersData[i].registered.age <= 20 && allUsersData[i].registered.age > 10) {
-        userToTwenty.push(allUsersData[i]);
-      } else if (allUsersData[i].registered.age > 20) {
-        userToThirty.push(allUsersData[i]);
-      }
-    }
-    //console.log(usersToTen);
+    console.log(1);
     //console.log(userToTwenty);
     //console.log(userToThirty);
 
-    const searchUsersToTen = usersToTen.filter((user) => {
+    const searchUsersToTen = this.state.usersToTen.filter((user) => {
       return (
         user.name.first.toLowerCase().includes(this.state.searchValue.toLowerCase()) ||
         user.name.last.toLowerCase().includes(this.state.searchValue.toLowerCase())
       );
     });
-    const searchUsersToTwenty = userToTwenty.filter((user) => {
+    const searchUsersToTwenty = this.state.userToTwenty.filter((user) => {
       return (
         user.name.first.toLowerCase().includes(this.state.searchValue.toLowerCase()) ||
         user.name.last.toLowerCase().includes(this.state.searchValue.toLowerCase())
@@ -201,7 +199,7 @@ export default class Table extends Component {
                 </div>
               </div>
 
-              {this.checkUsersAr(userToThirty)}
+              {this.checkUsersAr(this.state.userToThirty)}
             </div>
 
             <div
@@ -230,8 +228,11 @@ export default class Table extends Component {
                           <div className="cart_body">{item.email}</div>
                         </div>
                         <div className="cart__actions">
-                          <div className="cart__actions-delete">✖</div>
-                          <div className="cart__actions-basket">🛒</div>
+                          <div
+                            className="cart__actions-delete"
+                            onClick={(e) => this.deleteChoosenUser(item)}>
+                            ✖
+                          </div>
                         </div>
                       </div>
                     </div>
